@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Price quote</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<nav class="ccsticky-nav">
+		<div class="header-items-container">
+			<div class="brand">
+				<i class="fas fa-laptop"></i>
+				Your Store
+			</div>
+			<ul>
+				<li><a th:href="@{/GoToEmployeeHome}">Home</a></li>
+				<li align="right"><a th:href="@{/Logout}">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<section>
+	<h1>Price quote</h1>
+	
+	<div class="price-quote-form-container">
+		<div class="quote-list-item smaller-size">
+			<div class="quote-list-item-image">
+				<img th:src="|data:image/jpeg;base64,${quote.product.image}|" src="https://picsum.photos/150" width="225" height="150"/>
+			</div>
+			<div class="quote-list-item-info">
+				<div class="quote-list-item-date" th:text="${quote.submissionDate}">00/00/0000 00:00</div>
+				<h6 th:text="${quote.client}">client_user</h6>
+				<h2 th:text="${quote.product.name}">Product</h2>
+				<div class="quote-list-item-option-list">
+					<ul>
+						<li th:each="o : ${quote.options}" th:classappend="${#strings.equals('ON_SALE', #strings.toString(o.type))} ? on-sale">
+							<span th:text="${o.name}">Option</span>
+						</li>
+					</ul>
+				</div>
+				<form id="priceQuoteForm" th:action="@{/PriceQuote}" method="POST">
+					<input class="custom-input price-field" name="price" type="text" placeholder="price: 1234.56" required />
+					<input type="hidden" name="quoteId" th:value="${quote.id}" />
+				</form>
+			</div>
+		</div>
+		<input class="price-quote-button pointer" form="priceQuoteForm" type="submit" name="priceQuote" value="Price quote" >
+	</div>
+	</section>
+</body>
+</html>

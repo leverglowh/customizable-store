@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home page Employee</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<nav class="ccsticky-nav">
+		<div class="header-items-container">
+			<div class="brand">
+				<i class="fas fa-laptop"></i>
+				Your Store
+			</div>
+			<ul>
+				<li><a th:href="@{/GoToEmployeeHome}">Home</a></li>
+				<li align="right"><a th:href="@{/Logout}">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<section>
+	<h1>Welcome to the employee Home page</h1>
+	Nice to see you again
+	<span th:text="${session.user.username}">Slave worker</span>
+	
+	<div>
+		<h4>Quote history</h4>
+		<div th:each="q : ${quotes}" class="quote-list-container">
+			<div class="quote-list-item">
+				<div class="quote-list-item-image">
+					<img th:src="|data:image/jpeg;base64,${q.product.image}|" src="https://picsum.photos/150" width="225" height="150"/>
+				</div>
+				<div class="quote-list-item-info">
+					<div class="quote-list-item-date" th:text="${q.submissionDate}">00/00/0000 00:00</div>
+					<h6 th:text="${q.client}">client_user</h6>
+					<h2 th:text="${q.product.name}">Product</h2>
+					<div class="quote-list-item-option-list">
+						<ul>
+							<li th:each="o : ${q.options}" th:classappend="${#strings.equals('ON_SALE', #strings.toString(o.type))} ? on-sale">
+								<span th:text="${o.name}">Option</span>
+							</li>
+						</ul>
+					</div>
+					<div class="quote-list-item-price" th:text="${q.price != null} ? ${ 'EUR ' + q.price} : 'ND'">EUR 9999.99</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="divider"></div>
+	<div>
+		<h4>Unhandled quotes</h4>
+		<div th:each="uq : ${unhandledQuotes}" class="quote-list-container">
+			<div class="quote-list-item">
+				<div class="quote-list-item-image">
+					<img th:src="|data:image/jpeg;base64,${uq.product.image}|" src="https://picsum.photos/150" width="225" height="150"/>
+				</div>
+				<div class="quote-list-item-info">
+					<div class="quote-list-item-date" th:text="${uq.submissionDate}">00/00/0000 00:00</div>
+					<h6 th:text="${uq.client}">client_user</h6>
+					<h2 th:text="${uq.product.name}">Product</h2>
+					<div class="quote-list-item-option-list">
+						<ul>
+							<li th:each="o : ${uq.options}" th:classappend="${#strings.equals('ON_SALE', #strings.toString(o.type))} ? on-sale">
+								<span th:text="${o.name}">Option</span>
+							</li>
+						</ul>
+					</div>
+					<form th:action="@{/PriceQuote}" method="GET">
+						<input type="hidden" name="quoteId" th:value="${uq.id}" />
+						<input class="quote-list-item-price pointer" type="submit" value="Price quote" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+</body>
+</html>

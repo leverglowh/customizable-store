@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Your Store: customizable tech.</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="./css/style.css" th:href="@{/css/style.css}" />
+<script src="user-utils.js" charset="utf-8" defer></script>
+</head>
+<body id="login-page-body">
+	<nav class="ccsticky-nav">
+		<div class="header-items-container">
+			<div class="brand">
+				<i class="fas fa-laptop"></i>
+				Your Store
+			</div>
+		</div>
+	</nav>
+	<section class="home-page-container">
+		<header>
+			<h1>Welcome to Your Store.</h1>
+			<p><i>Customize all products.</i></p>
+		</header>
+		<div class="login-form-container" id="home-form-container">
+			<div class="login-form">
+				<form action="#" id="home-form">
+					<input class="custom-input" type="text" name="username" id="user-name" required
+							autocomplete='off' spellcheck='false' autocorrect='off' placeholder="username"/> <br/>
+					<input class="custom-input" type="password" name="password" id="user-password" placeholder="password" required/> <br/>
+					<input class="custom-input pointer" id="submit-login" type="button" value="login"/>
+					<p id="no-reg-link" class="not-registered">Not registered? <a id="toggle-register" href="#">Create an account</a></p>
+				</form> 
+			</div>
+		</div>
+	</section>
+</body>
+</html>

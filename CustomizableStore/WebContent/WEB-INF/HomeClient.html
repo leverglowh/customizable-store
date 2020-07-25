@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home page Client</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<nav class="ccsticky-nav">
+		<div class="header-items-container">
+			<div class="brand">
+				<i class="fas fa-laptop"></i>
+				Your Store
+			</div>
+			<ul>
+				<li><a th:href="@{/GoToClientHome}">Home</a></li>
+				<li align="right"><a th:href="@{/Logout}">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<section>
+	<h1>Welcome to Your Store</h1>
+	Nice to see you again
+	<span th:text="${session.user.username}">Slave buyer</span>
+	
+	<div>
+		<h4>Quote history</h4>
+		<div th:each="q : ${quotes}" class="quote-list-container">
+			<div class="quote-list-item">
+				<div class="quote-list-item-image">
+					<img th:src="|data:image/jpeg;base64,${q.product.image}|" src="https://picsum.photos/150" width="225" height="150"/>
+				</div>
+				<div class="quote-list-item-info">
+					<div class="quote-list-item-date" th:text="${q.submissionDate}">00/00/0000 00:00</div>
+					<h2 th:text="${q.product.name}">Product</h2>
+					<div class="quote-list-item-option-list">
+						<ul>
+							<li th:each="o : ${q.options}" th:classappend="${#strings.equals('ON_SALE', #strings.toString(o.type))} ? on-sale">
+								<span th:text="${o.name}">Option</span>
+							</li>
+						</ul>
+					</div>
+					<div class="quote-list-item-price" th:text="${q.price != null} ? ${ 'EUR ' + q.price} : 'ND'">EUR 9999.99</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="divider"></div>
+	<div>
+		<h4>Request new quotes</h4>
+		<div th:if="@{products !== null}" th:each="p : ${products}" class="quote-list-container">
+			<div class="quote-list-item">
+				<div class="quote-list-item-image">
+					<img th:src="|data:image/jpeg;base64,${p.image}|" src="https://picsum.photos/150" width="225" height="150"/>
+				</div>
+				<form th:id="'productForm' + ${p.id}" th:action="@{/CreateQuote}" method="POST">
+					<div class="quote-list-item-info auto-width">
+						<h2 th:text="${p.name}">Product</h2>
+						<div class="quote-list-item-option-list">
+							<ul>
+								<li th:each="o : ${p.options}" th:classappend="${#strings.equals('ON_SALE', #strings.toString(o.type))} ? on-sale">
+									<label th:for="${o.code}" th:text="${o.name}">Option</label>
+									<span th:if="${#strings.equals('1', #strings.toString(o.id))}">
+										<input type="checkbox" th:id="${o.code}"
+										   th:name="baseOptionId" th:value="${o.id}" required/>
+									</span>
+									<span th:unless="${#strings.equals('1', #strings.toString(o.id))}">
+										<input type="checkbox" th:id="${o.code}" th:name="optionIds" th:value="${o.id}"/>
+									</span>
+								</li>
+							</ul>
+						</div>
+						<input type="hidden" th:id="${p.id}" name="productId" th:value="${p.id}">
+						<input class="quote-list-item-price pointer" type="submit" name="create" value="Create quote" >
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</section>
+</body>
+</html>

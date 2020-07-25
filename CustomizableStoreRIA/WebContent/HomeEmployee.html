@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home page Employee</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="./css/style.css"/>
+<script type="module" src="employee-home.js" charset="utf-8" defer></script>
+</head>
+<body>
+	<nav class="ccsticky-nav">
+		<div class="header-items-container">
+			<div class="brand">
+				<i class="fas fa-laptop"></i>
+				Your Store
+			</div>
+			<ul>
+				<li align="right"><a href="Logout">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<section>
+	<h1>Welcome to the employee Home page</h1>
+	Nice to see you again <span id="welcome-username"></span>
+	
+	<div>
+		<h4>Quote history</h4>
+		<div class="quote-list-container" id="quote-list-container">
+		</div>
+	</div>
+	<div class="divider"></div>
+	<div>
+		<h4>Unhandled quotes</h4>
+		<div class="quote-list-container" id="unhandled-quote-list-container">
+		</div>
+	</div>
+	</section>
+</body>
+</html>
